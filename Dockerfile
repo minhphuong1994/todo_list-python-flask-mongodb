@@ -26,6 +26,6 @@ COPY ./requirements.txt /home/app/requirements.txt
 
 RUN pip install -r /home/app/requirements.txt
 
-COPY ./core_files /home/app
+COPY . /home/app
 
 CMD ["python","/home/app/main.py"]  
