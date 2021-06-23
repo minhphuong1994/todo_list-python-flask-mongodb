@@ -4,14 +4,15 @@ from flask import Flask, render_template, request, redirect, url_for, \
 from pymongo import MongoClient
 
 
-app = Flask(__name__, template_folder="./template")
+app = Flask(__name__, template_folder="./template")  # default name is templates
 
-client = MongoClient("mongodb://127.0.0.1:27017")
-db = client.data #my mongodb name is data
-todos = db.todos #my mongodb table/collection name is todos
+client = MongoClient("mongodb://admin:password@mongodb")  # changed localhost to [container name] to work with mongodb in Docker container
+db = client.mydata  # my database name is mydata
+todos = db.todos_list  # my table/collection name is todos_list
 
 t = "Todo list Web App"
-h = "Your list are: "
+h = "Todo List: "
+
 
 @app.route("/")
 def load_api():
@@ -19,18 +20,21 @@ def load_api():
     # print(list)
     return render_template("index.html",todo=list, t=t,h=h)
 
+
 @app.route("/create", methods=['POST'])
 def create_api():
     todo = request.values.get("task1")
     todos.insert_one({"task":todo})
     return redirect("/")
 
+
 @app.route("/update", methods=['PUT'])
 def update_api():
     item = request.json
     print(item)
     todos.update({"_id":ObjectId(item['_id'])},{"task":item['task']})
-    return jsonify(item)
+    return jsonify(item), 200
+
 
 @app.route("/delete")
 def delete_api():
@@ -38,5 +42,6 @@ def delete_api():
     todos.remove({"_id":ObjectId(key)})
     return redirect("/")
 
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')

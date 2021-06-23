@@ -1,4 +1,4 @@
-URL_Update = "http://127.0.0.1:5000/update"
+URL_Update = "/update"
 
 console.log("js here")
 
@@ -19,8 +19,8 @@ const updateItem = (e) =>{
 //              console.log(data)
 //            })
         })
-        .catch(function (error) {
-          console.log("Fetch error: " + error)
-        })
+    .catch(function (error) {
+      console.log("Fetch error: " + error)
+    })
     window.location.reload()
 }

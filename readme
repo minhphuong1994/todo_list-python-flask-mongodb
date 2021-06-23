@@ -1,2 +1,2 @@
 # Todo List App
-Allow user to perform CRUD actions with a local MongoDB database
+Allow user to perform CRUD actions with a local MongoDB database in Docker Containers
